@@ -10,6 +10,8 @@ var express = require('express')
 var app = express();
 var io = require('socket.io').listen(app);
 
+var clients = [];
+
 app.configure(function(){
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
@@ -26,6 +28,7 @@ app.configure('development', function(){
 });
 
 io.sockets.on('connection', function (socket) {
+  clients.push(socket);
   socket.emit('start', { message: 'Starting...' });
   socket.on('message', function (data) {
     console.log(data);
@@ -36,6 +39,9 @@ app.get('/', routes.index);
 app.post('/', function(req, res){
   console.log(req.body);
   res.send(req.body);
+  for(var i=0; i < clients.length; i++){
+      clients[i].emit('packet', req.body);
+  }
 });
 
 http.createServer(app).listen(80);
