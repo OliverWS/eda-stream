@@ -74,7 +74,7 @@ io.sockets.on('connection', function (socket) {
   });
 });
 
-app.get('/', routes.index);
+//app.get('/', routes.index);
 app.post('/', function(req, res){
   console.log(req.body);
   res.send(req.body);
