@@ -68,6 +68,7 @@ io.configure('production', function(){
 
 io.sockets.on('connection', function (socket) {
   clients.push(socket);
+  console.log("Clients: " + clients.toString());
   socket.emit('start', { message: 'Starting...' });
   socket.on('message', function (data) {
     console.log(data);
