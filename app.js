@@ -1,18 +1,31 @@
-var express = require('express');
-var app = express.createServer();
-var io = require('socket.io').listen(app);
 
-app.listen(80);
+/**
+ * Module dependencies.
+ */
 
-app.get('/', function (req, res) {
-  res.sendfile(__dirname + '/index.html');
+var express = require('express')
+  , routes = require('./routes')
+  , http = require('http');
+
+var app = express();
+
+app.configure(function(){
+  app.set('views', __dirname + '/views');
+  app.set('view engine', 'jade');
+  app.use(express.favicon());
+  app.use(express.logger('dev'));
+  app.use(express.static(__dirname + '/public'));
+  app.use(express.bodyParser());
+  app.use(express.methodOverride());
+  app.use(app.router);
 });
 
-io.sockets.on('connection', function (socket) {
-  socket.emit('news', { hello: 'world' });
-  socket.on('my other event', function (data) {
-    console.log(data);
-  });
+app.configure('development', function(){
+  app.use(express.errorHandler());
 });
 
+app.get('/', routes.index);
 
+http.createServer(app).listen(8080);
+
+console.log("Express server listening on port 8080");
