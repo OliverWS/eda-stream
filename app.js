@@ -12,6 +12,7 @@ var io = require('socket.io').listen(app);
 
 var clients = [];
 
+
 app.configure(function(){
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
@@ -23,11 +24,6 @@ app.configure(function(){
   app.use(app.router);
 });
 
-app.all('/', function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
-  next();
- });
 
 
 io.configure('production', function(){
