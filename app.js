@@ -44,13 +44,6 @@ io.configure('production', function(){
 });
 
 
-app.all('/*', function(req, res, next) {
- res.writeHead({"Access-Control-Allow-Origin": "*",
- 	"Access-Control-Allow-Headers":"X-Requested-With",
-    "Access-Control-Allow-Methods":"GET, PUT, POST, DELETE"}
- );
- next();
-});
 
 
 io.sockets.on('connection', function (socket) {
