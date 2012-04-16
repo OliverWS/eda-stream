@@ -80,6 +80,7 @@ app.post('/', function(req, res){
   res.send(req.body);
   for(var i=0; i < clients.length; i++){
       clients[i].emit('packet', req.body);
+      console.log("Sending packet to: " + clients[i].toString());
   }
 });
 
