@@ -21,7 +21,7 @@ var allowCrossDomain = function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', (req.headers.origin || "*"));
     res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-      
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
     // intercept OPTIONS method
     if ('OPTIONS' == req.method) {
       res.send(200);
