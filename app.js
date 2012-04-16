@@ -8,6 +8,7 @@ var express = require('express')
   , http = require('http');
 
 var app = express();
+var io = require('socket.io').listen(app);
 
 app.configure(function(){
   app.set('views', __dirname + '/views');
@@ -24,8 +25,19 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
+io.sockets.on('connection', function (socket) {
+  socket.emit('start', { message: 'Starting...' });
+  socket.on('message', function (data) {
+    console.log(data);
+  });
+});
+
 app.get('/', routes.index);
+app.post('/', function(req, res){
+  console.log(req.body);
+  res.send(req.body);
+});
 
-http.createServer(app).listen(8080);
+http.createServer(app).listen(80);
 
-console.log("Express server listening on port 8080");
+console.log("Express server listening on port 80");
