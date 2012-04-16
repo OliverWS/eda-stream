@@ -8,7 +8,7 @@ var express = require('express')
   , http = require('http');
 
 var app = express();
-var io = require('socket.io').listen(app);
+var io = require('socket.io').listen(8080);
 
 var clients = [];
 
@@ -75,7 +75,7 @@ io.sockets.on('connection', function (socket) {
   });
 });
 
-//app.get('/', routes.index);
+app.get('/', routes.index);
 app.post('/', function(req, res){
   console.log(req.body);
   res.send(req.body);
