@@ -71,7 +71,7 @@ io.sockets.on('connection', function (socket) {
   console.log("Clients: " + clients.toString());
   socket.emit('start', { message: 'Starting...' });
   socket.on('disconnect', function (socket) {
-  	console.log("Received disconnect");
+  	delete clients[clients.indexOf(socekt)];
   });
   
 });
@@ -81,7 +81,12 @@ app.get('/', routes.index);
 app.post('/', function(req, res){
   console.log(req.body);
   res.send(req.body);
-  io.sockets.broadcast.emit(req.body);
+  for(var i=0; i < clients.length; i++){
+  	  if(clients[i] != undefined){
+     	clients[i].emit('packet', req.body);
+      	console.log("Sending packet to client #" + i.toString() );
+      }
+  }
 });
 
 http.createServer(app).listen(80);
