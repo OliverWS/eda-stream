@@ -8,7 +8,8 @@ var Graph = function(opts){
 		label = options.label || "graph";
 		data = {};
 		size = options.size || 4*30;
-		data.points = [0.0];
+		data.points = [];
+		for(var i=0; i < size; i++){data.points.push(0.0);}
 		data.range = [0,100];
 		updateRange();
 		renderGraph();	
