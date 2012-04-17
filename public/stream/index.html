@@ -9,7 +9,7 @@
 		  $(document).ready(function() {
 		  		  
 		  	socket = io.connect('http://live.ollie.ws:8080');
-		  	var opts = { el:"#eda"};
+		  	var opts = { el:"#eda", pad:125};
 		  	graph = new Graph(opts);
 		  	socket.on('packet', function (data) {
 		    	var line = data.payload.replace("\r\n","").split(",");
@@ -22,7 +22,7 @@
 		<link rel="stylesheet" href="../stylesheets/graph.css" type="text/css" />
 	</head>
 	<body>
-		<div id="eda" style="width: 100%; height: 30%;"></div>
+		<div id="eda" style="width: 100%; height:100%;"></div>
 		
 	
 	
