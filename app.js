@@ -75,7 +75,7 @@ io.sockets.on('connection', function (socket) {
   });
 });
 
-io.sockets.on('disconnection', function (socket) {
+io.sockets.on('disconnect', function (socket) {
 	var idx = clients.indexOf(socket); // Find the index
 	if(idx!=-1) clients.splice(idx, 1); // Remove it if really found!
 });
