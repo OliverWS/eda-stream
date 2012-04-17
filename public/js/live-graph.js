@@ -22,6 +22,19 @@ var Graph = function(opts){
 		data.range = [d3.min(data.points),d3.max(data.points)];	
 	};
 	
+	var setSize = function(s) {
+		if(s > size) {
+			for(var i=size; i < s; i++){data.points.push(0.0);}
+			size = s;
+		}
+		else if (s < size) {
+			for(var i=size; i > s; i--){data.points.shift();}
+		}
+		updateRange();
+		updateGraph();
+	
+	};
+	
 	var addPoint = function(dp) {
 		data.points.push(dp);
 		
@@ -297,6 +310,6 @@ var Graph = function(opts){
 };	
 	
 	init(opts);
-	return {addPoint:addPoint};
+	return {addPoint:addPoint, setSize:setSize};
 		
 };
