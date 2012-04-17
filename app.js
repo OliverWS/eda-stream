@@ -9,8 +9,8 @@ var express = require('express')
 
 var app = express();
 var io = require('socket.io').listen(8080);
-
-var clients = [];
+var n = 0;
+var clients = {};
 
 app.use(express.methodOverride());
 
@@ -70,14 +70,11 @@ io.sockets.on('connection', function (socket) {
   clients.push(socket);
   console.log("Clients: " + clients.toString());
   socket.emit('start', { message: 'Starting...' });
-  socket.on('message', function (data) {
-    console.log(data);
-  });
 });
 
 io.sockets.on('disconnect', function (socket) {
 	var idx = clients.indexOf(socket); // Find the index
-	if(idx!=-1) clients.splice(idx, 1); // Remove it if really found!
+	if(idx!=-1) console.log("Removing client: " + idx.toString() + " " + clients.splice(idx, 1)); // Remove it if really found!
 });
 
 app.get('/', routes.index);
@@ -86,7 +83,7 @@ app.post('/', function(req, res){
   res.send(req.body);
   for(var i=0; i < clients.length; i++){
       clients[i].emit('packet', req.body);
-      console.log("Sending packet to: " + clients[i].toString());
+      console.log("Sending packet to client #" + i.toString() );
   }
 });
 
