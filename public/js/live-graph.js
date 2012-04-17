@@ -28,7 +28,8 @@ var Graph = function(opts){
 			data.points.shift();
 		}
 		data.points.push(0.0);
-		data.points.unshift(0,0);
+		data.points.unshift(0,0.0);
+		console.log(data.points.length);
 		updateGraph();
 	};
 	
