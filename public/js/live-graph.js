@@ -20,7 +20,7 @@ var Graph = function(opts){
 	};
 	
 	var updateRange = function() {
-		data.range = [d3.min(data.points),d3.max(data.points)];	
+		data.range = [d3.min(data.points),d3.max(data.points)*1.1];	
 	};
 	
 	var setSize = function(s) {
