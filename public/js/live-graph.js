@@ -52,11 +52,11 @@ var Graph = function(opts){
 		x = d3.scale.linear().domain([0, data.points.length+2]).range([0, w]);
 		y = d3.scale.linear().domain(data.range).range([h, 0]);
 		var points = data.points.clone();
-		points.push(0.0);
-		points.unshift(0.0);
+		points.push(data.range[0]);
+		points.unshift(data.range[0]);
 		vis.selectAll("g.y").remove();
 		var yrule = vis.selectAll("g.y")
-		    .data(y.ticks(3))
+		    .data(y.ticks(5))
 		    .enter().append("svg:g")
 		    .attr("class", "y");
 		
@@ -140,7 +140,7 @@ var Graph = function(opts){
 	
 	 //dynamicTimeTicks(vis,data,data,10);	 
 	 var yrule = vis.selectAll("g.y")
-	     .data(y.ticks(3))
+	     .data(y.ticks(5))
 	     .enter().append("svg:g")
 	     .attr("class", "y");
 	 
