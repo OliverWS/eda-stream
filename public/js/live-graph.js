@@ -5,9 +5,9 @@ var Graph = function(opts){
 	var vis,data,el,p,w,h,x,y,line,vis, size, time;
 	var init = function(options) {
 		el = options.el;
-		w = $(el).width();
-		h = $(el).height();
-		p = options.p || 50;
+		p = options.pad || 50;
+		w = $(el).width() - 2*p;
+		h = $(el).height() - 2*p;
 		label = options.label || "graph";
 		data = {};
 		size = options.size || 4*30;
@@ -49,7 +49,7 @@ var Graph = function(opts){
 	};
 	
 	var updateGraph = function() {
-		x = d3.scale.linear().domain([0, data.points.length]).range([0, w]);
+		x = d3.scale.linear().domain([0, data.points.length+2]).range([0, w]);
 		y = d3.scale.linear().domain(data.range).range([h, 0]);
 		var points = data.points.clone();
 		points.push(0.0);
