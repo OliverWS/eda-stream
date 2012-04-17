@@ -20,6 +20,9 @@ var Graph = function(opts){
 	
 	var addPoint = function(dp) {
 		data.points.push(dp);
+		if(data.points.length > data.range){
+			data.points.shift();
+		}
 		updateRange();
 		updateGraph();
 	};

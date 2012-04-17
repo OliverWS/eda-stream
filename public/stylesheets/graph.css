@@ -126,7 +126,7 @@ yText {
 	fill: none;
 }
 
-.eda, .detail {
+.graph-data, .detail {
 	stroke: #2CC4FF;
 	fill: #B6E1F2;
 }
