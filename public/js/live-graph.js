@@ -43,7 +43,7 @@ var Graph = function(opts){
 		vis.selectAll("path.graph-data")
 			.transition()
 			.duration(1)
-			.attr("d", line(data.points.clone()))	
+			.attr("d", line(points))	
 	};
 	
 	var renderGraph = function() {
