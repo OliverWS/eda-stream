@@ -7,8 +7,8 @@ var Graph = function(opts){
 		p = options.p || 50;
 		label = options.label || "graph";
 		data = {};
-		size = options.size || 2048;
-		data.points = [0.0,0.2,0.4,0.6,0.8,1.0,0.8,0.6,0.4];
+		size = options.size || 4*30;
+		data.points = [0.0];
 		data.range = [0,100];
 		updateRange();
 		renderGraph();	
@@ -19,9 +19,13 @@ var Graph = function(opts){
 	};
 	
 	var addPoint = function(dp) {
+		data.points.pop();
 		data.points.push(dp);
+		data.points.push(0.0);
 		if(data.points.length > data.range){
 			data.points.shift();
+			data.points.shift();
+			data.points.unshift(0,0)
 		}
 		updateRange();
 		updateGraph();
