@@ -71,7 +71,7 @@ io.sockets.on('connection', function (socket) {
   console.log("Clients: " + clients.toString());
   socket.emit('start', { message: 'Starting...' });
   socket.on('disconnect', function (socket) {
-  	delete clients[clients.indexOf(socekt)];
+  	delete clients[clients.indexOf(socket)];
   });
   
 });
