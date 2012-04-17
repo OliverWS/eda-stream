@@ -71,9 +71,7 @@ io.sockets.on('connection', function (socket) {
   console.log("Clients: " + clients.toString());
   socket.emit('start', { message: 'Starting...' });
   socket.on('disconnect', function (socket) {
-  	console.log("Received disconnect from: #" + clients.indexOf(socket));
-  	var idx = clients.indexOf(socket); // Find the index
-  	if(idx!=-1) console.log("Removing client: " + idx.toString() + " " + clients.splice(idx, 1)); // Remove it if really found!
+  	console.log("Received disconnect");
   });
   
 });
@@ -83,10 +81,7 @@ app.get('/', routes.index);
 app.post('/', function(req, res){
   console.log(req.body);
   res.send(req.body);
-  for(var i=0; i < clients.length; i++){
-      clients[i].emit('packet', req.body);
-      console.log("Sending packet to client #" + i.toString() );
-  }
+  socket.broadcast.emit(req.body);
 });
 
 http.createServer(app).listen(80);
