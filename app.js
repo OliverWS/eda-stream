@@ -81,7 +81,7 @@ app.get('/', routes.index);
 app.post('/', function(req, res){
   console.log(req.body);
   res.send(req.body);
-  socket.broadcast.emit(req.body);
+  io.sockets.broadcast.emit(req.body);
 });
 
 http.createServer(app).listen(80);
