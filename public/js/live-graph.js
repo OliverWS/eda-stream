@@ -15,7 +15,9 @@ var Graph = function(opts){
 		for(var i=0; i < size; i++){data.points.push(0.0);}
 		data.range = [0,100];
 		updateRange();
-		renderGraph();	
+		renderGrid();
+		renderGraph();
+			
 	};
 	
 	var updateRange = function() {
@@ -24,7 +26,7 @@ var Graph = function(opts){
 	
 	var setSize = function(s) {
 		if(s > size) {
-			for(var i=size; i < s; i++){data.points.push(0.0);}
+			for(var i=size; i < s; i++){data.points.unshift(0.0);}
 			size = s;
 		}
 		else if (s < size) {
@@ -115,7 +117,7 @@ var Graph = function(opts){
 						.attr("width",w)
 						.attr("height",h);
 	
-	 dynamicTimeTicks(vis,data,data,10);	 
+	 //dynamicTimeTicks(vis,data,data,10);	 
 	 var yrule = vis.selectAll("g.y")
 	     .data(y.ticks(5))
 	     .enter().append("svg:g")
@@ -153,7 +155,7 @@ var Graph = function(opts){
 	 	.attr("dy", "-"+p/4+"px")
 	 	.attr("dx", 0)
 	 	.attr("text-anchor", "middle")
-	 	.text(param("date"));		
+	 	.text(label);		
 };
 		
 	var dynamicTimeTicks = function (vis,data, event, numTicks) {
