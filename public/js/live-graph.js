@@ -49,7 +49,7 @@ var Graph = function(opts){
 	};
 	
 	var updateGraph = function() {
-		x = d3.scale.linear().domain([0, data.points.length+2]).range([0, w]);
+		x = d3.scale.linear().domain([0, data.points.length]).range([0, w]);
 		y = d3.scale.linear().domain(data.range).range([h, 0]);
 		var points = data.points.clone();
 		points.push(data.range[0]);
@@ -59,7 +59,7 @@ var Graph = function(opts){
 		    .data(y.ticks(5))
 		    .enter().append("svg:g")
 		    .attr("class", "y");
-		
+		vis.selectAll("text.title").text(formatDate(new Date()));
 		yrule.append("svg:line")
 		    .attr("class", "grid")
 		    .style("shape-rendering", "crispEdges")
