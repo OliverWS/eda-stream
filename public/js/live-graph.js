@@ -22,13 +22,15 @@ var Graph = function(opts){
 	var addPoint = function(dp) {
 		data.points.pop();
 		data.points.push(dp);
-		data.points.push(0.0);
+		updateRange();
 		if(data.points.length > data.range){
 			data.points.shift();
-			data.points.shift();
-			data.points.unshift(0,0)
 		}
-		updateRange();
+		if(data.points[0] > 0.0){data.points.push(0.0);}
+		if(data.points[data.points.length - 1] > 0.0){
+			data.points.shift();
+			data.points.unshift(0,0);
+		}
 		updateGraph();
 	};
 	
