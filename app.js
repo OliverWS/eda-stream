@@ -71,20 +71,22 @@ io.sockets.on('connection', function (socket) {
   console.log("Clients: " + clients.toString());
   socket.emit('start', { message: 'Starting...' });
   socket.on('disconnect', function (socket) {
-  	delete socket;
+  	delete clients[clients.indexOf(socket)];
   });
   
 });
 
 
-app.get('/', routes.index);
+app.get('/', function(req, res){
+	
+
+
+});
 app.post('/', function(req, res){
-  console.log(req.body);
   res.send(req.body);
   for(var i=0; i < clients.length; i++){
   	  if(clients[i] != undefined){
      	clients[i].emit('packet', req.body);
-      	console.log("Sending packet to client #" + i.toString() );
       }
   }
 });
