@@ -81,7 +81,7 @@ app.get('/', function(req, res){
 
 });
 app.post('/', function(req, res){
-  res.send(req.body);
+  res.send(200);
   for(var i=0; i < clients.length; i++){
   	  if(clients[i] != undefined){
      	clients[i].emit('packet', req.body);

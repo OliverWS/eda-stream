@@ -24,12 +24,13 @@ class proxy:
 	
 	def poll(self):
 		n = 0
-		while self.run:
-			n +=1 
-			line = self.serial.readline()
+		self.serial.flush()
+		for line in self.serial:
+			n += 1
 			if n%self.opts.downsample == 0:
+				t1 = time.time()
 				self.push(line)
-				time.sleep(0.0001)
+				print "Delay: %f"%(time.time()-t1)
 		
 	def push(self,packet):
 		try:

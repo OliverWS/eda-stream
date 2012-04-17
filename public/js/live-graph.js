@@ -70,11 +70,11 @@ var Graph = function(opts){
 		    .attr("y2", y);
 		yrule.append("svg:text")
 		    .attr("class", "yText")
-		    .attr("x", -3)
+		    .attr("x", -6)
 		    .attr("y", y)
 		    .attr("dy", ".35em")
 		    .attr("text-anchor", "end")
-			.text(function(d,i) {return d.toFixed(1).toString()});
+			.text(function(d,i) {return d.toFixed(2).toString()});
 		
 		vis.selectAll("path.graph-data")
 			.transition()
