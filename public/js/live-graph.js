@@ -37,6 +37,7 @@ var Graph = function(opts){
 	};
 	
 	var addPoint = function(dp) {
+		if(dp == NaN || dp == undefined){return;}
 		data.points.push(dp);
 		
 		if(data.points.length > size){
