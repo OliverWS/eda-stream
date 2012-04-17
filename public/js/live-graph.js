@@ -54,9 +54,26 @@ var Graph = function(opts){
 		var points = data.points.clone();
 		points.push(0.0);
 		points.unshift(0.0);
+		vis.selectAll("g.y").remove();
 		var yrule = vis.selectAll("g.y")
-			.transition()
-		    .data(y.ticks(3));
+		    .data(y.ticks(3))
+		    .enter().append("svg:g")
+		    .attr("class", "y");
+		
+		yrule.append("svg:line")
+		    .attr("class", "grid")
+		    .style("shape-rendering", "crispEdges")
+		    .attr("x1", 0)
+		    .attr("x2", w)
+		    .attr("y1", y)
+		    .attr("y2", y);
+		yrule.append("svg:text")
+		    .attr("class", "yText")
+		    .attr("x", -3)
+		    .attr("y", y)
+		    .attr("dy", ".35em")
+		    .attr("text-anchor", "end")
+			.text(function(d,i) {return d.toFixed(1).toString()});
 		
 		vis.selectAll("path.graph-data")
 			.transition()
