@@ -12,7 +12,7 @@
 		  	var opts = { el:"#eda"};
 		  	graph = new Graph(opts);
 		  	socket.on('packet', function (data) {
-		    	var line = data.replace("\r\n","").split(",");
+		    	var line = data.payload.replace("\r\n","").split(",");
 		    	graph.addPoint(parseFloat(line[line.length-1]));
 		 	});
 		 	
