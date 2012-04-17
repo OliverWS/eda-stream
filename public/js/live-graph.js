@@ -20,20 +20,18 @@ var Graph = function(opts){
 	};
 	
 	var addPoint = function(dp) {
-		console.log(data.points.length);
-		data.points.pop();
-		data.points.shift();
-		console.log(data.points.length);
+		//data.points.pop();
+		//data.points.shift();
 		data.points.push(dp);
+		/*
 		if(data.points.length > size){
 			console.log("Too many points: " + data.points.length + " > " + size);
 			data.points.shift();
 		}
-		console.log(data.points.length);
+		*/
 		updateRange();
-		data.points.push(0.0);
-		data.points.unshift(0,0.0);
-		console.log(data.points.length);
+		//data.points.push(0.0);
+		//data.points.unshift(0,0.0);
 		updateGraph();
 	};
 	
