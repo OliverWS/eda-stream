@@ -54,6 +54,10 @@ var Graph = function(opts){
 		var points = data.points.clone();
 		points.push(0.0);
 		points.unshift(0.0);
+		var yrule = vis.selectAll("g.y")
+			.transition()
+		    .data(y.ticks(3));
+		
 		vis.selectAll("path.graph-data")
 			.transition()
 			.duration(1)
