@@ -15,7 +15,6 @@ var Graph = function(opts){
 		for(var i=0; i < size; i++){data.points.push(0.0);}
 		data.range = [0,100];
 		updateRange();
-		renderGrid();
 		renderGraph();
 			
 	};
@@ -83,6 +82,7 @@ var Graph = function(opts){
 		    .on('mousedown',mousedown)			    
 		  .append("g")
 		    .attr("transform", "translate(" + p + "," + p + ")");
+		renderGrid();
 		vis.append("path")
 			.attr("d", line(data.points))
 		    .attr("class", "graph-data")
