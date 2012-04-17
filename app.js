@@ -74,6 +74,7 @@ io.sockets.on('connection', function (socket) {
     console.log(data);
   });
 });
+
 io.sockets.on('disconnection', function (socket) {
 	var idx = clients.indexOf(socket); // Find the index
 	if(idx!=-1) clients.splice(idx, 1); // Remove it if really found!

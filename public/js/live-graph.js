@@ -24,7 +24,7 @@ var Graph = function(opts){
 		data.points.shift();
 		data.points.push(dp);
 		updateRange();
-		if(data.points.length > data.range){
+		if(data.points.length > size){
 			data.points.shift();
 		}
 		data.points.push(0.0);
