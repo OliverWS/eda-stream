@@ -1,3 +1,14 @@
+Object.prototype.clone = function() {
+  var newObj = (this instanceof Array) ? [] : {};
+  for (i in this) {
+    if (i == 'clone') continue;
+    if (this[i] && typeof this[i] == "object") {
+      newObj[i] = this[i].clone();
+    } else newObj[i] = this[i]
+  } return newObj;
+};
+
+
 var Graph = function(opts){
 	var vis,data,el,p,w,h,x,y,line,vis, size, time;
 	var init = function(options) {
@@ -20,8 +31,6 @@ var Graph = function(opts){
 	};
 	
 	var addPoint = function(dp) {
-		//data.points.pop();
-		//data.points.shift();
 		data.points.push(dp);
 		
 		if(data.points.length > size){
@@ -30,19 +39,19 @@ var Graph = function(opts){
 		}
 		
 		updateRange();
-		//data.points.push(0.0);
-		//data.points.unshift(0,0.0);
 		updateGraph();
 	};
 	
 	var updateGraph = function() {
 		x = d3.scale.linear().domain([0, data.points.length]).range([0, w]);
 		y = d3.scale.linear().domain(data.range).range([h, 0]);
-		
+		var points = data.points.clone();
+		points.push(0.0);
+		points.unshift(0.0);
 		vis.selectAll("path.graph-data")
 			.transition()
 			.duration(1)
-			.attr("d", line(data.points))	
+			.attr("d", line(data.points.clone()))	
 	};
 	
 	var renderGraph = function() {
