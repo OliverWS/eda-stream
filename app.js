@@ -73,7 +73,7 @@ io.sockets.on('connection', function (socket) {
 });
 
 io.sockets.on('disconnect', function (socket) {
-	console.log("Received disconnect from: #" clients.indexOf(socket));
+	console.log("Received disconnect from: #" + clients.indexOf(socket));
 	var idx = clients.indexOf(socket); // Find the index
 	if(idx!=-1) console.log("Removing client: " + idx.toString() + " " + clients.splice(idx, 1)); // Remove it if really found!
 });
