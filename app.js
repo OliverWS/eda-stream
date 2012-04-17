@@ -10,7 +10,7 @@ var express = require('express')
 var app = express();
 var io = require('socket.io').listen(8080);
 var n = 0;
-var clients = {};
+var clients = new Array();
 
 app.use(express.methodOverride());
 
