@@ -312,7 +312,7 @@ var Graph = function(opts){
 	if(h==0){h = 12;}
 	var m = d.getMinutes();
 	var s = d.getSeconds();
-	var time = (pad(h) + ":" + pad(m) + " " + p);
+	var time = (pad(h) + ":" + pad(m) + ":" + pad(s) + " " + p);
 	if(showDate == true){
 		return (time + "|" + pad(d.getMonth()+1) + "/" + pad(d.getDay()+1) + "/" +d.getFullYear());
 	}
