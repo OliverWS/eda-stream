@@ -70,13 +70,14 @@ io.sockets.on('connection', function (socket) {
   clients.push(socket);
   console.log("Clients: " + clients.toString());
   socket.emit('start', { message: 'Starting...' });
+  socket.on('disconnect', function (socket) {
+  	console.log("Received disconnect from: #" + clients.indexOf(socket));
+  	var idx = clients.indexOf(socket); // Find the index
+  	if(idx!=-1) console.log("Removing client: " + idx.toString() + " " + clients.splice(idx, 1)); // Remove it if really found!
+  });
+  
 });
 
-io.sockets.on('disconnect', function (socket) {
-	console.log("Received disconnect from: #" + clients.indexOf(socket));
-	var idx = clients.indexOf(socket); // Find the index
-	if(idx!=-1) console.log("Removing client: " + idx.toString() + " " + clients.splice(idx, 1)); // Remove it if really found!
-});
 
 app.get('/', routes.index);
 app.post('/', function(req, res){
