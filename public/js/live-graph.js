@@ -109,7 +109,7 @@ var Graph = function(opts){
         mag = data.eda[index];	   
   	};	  
 
-	var renderGrid = function(vis, data) {
+	var renderGrid = function() {
 		var background = vis.append("svg:rect")
 							.attr("class", "background")
 							.attr("x",0)
