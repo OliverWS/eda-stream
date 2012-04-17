@@ -110,12 +110,12 @@ var Graph = function(opts){
   	};	  
 
 	var renderGrid = function(vis, data) {
-	var background = vis.append("svg:rect")
-						.attr("class", "background")
-						.attr("x",0)
-						.attr("y",0)
-						.attr("width",w)
-						.attr("height",h);
+		var background = vis.append("svg:rect")
+							.attr("class", "background")
+							.attr("x",0)
+							.attr("y",0)
+							.attr("width",w)
+							.attr("height",h);
 	
 	 //dynamicTimeTicks(vis,data,data,10);	 
 	 var yrule = vis.selectAll("g.y")
