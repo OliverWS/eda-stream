@@ -46,13 +46,13 @@ app.configure(function(){
 
 
 
-io.configure('production', function(){
+io.configure(function(){
   io.enable('browser client etag');
 
   io.enable('browser client minification');  // send minified client
   io.enable('browser client etag');          // apply etag caching logic based on version number
   io.enable('browser client gzip');          // gzip the file
-  io.set('log level', 4);                    // reduce logging
+  io.set('log level', 5);                    // reduce logging
   io.set('transports', [                     // enable all transports (optional if you want flashsocket)
       'websocket'
     , 'flashsocket'
