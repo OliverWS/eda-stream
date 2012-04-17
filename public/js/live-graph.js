@@ -10,6 +10,7 @@ var Graph = function(opts){
 		size = options.size || 2048;
 		data.points = [0.0,0.2,0.4,0.6,0.8,1.0,0.8,0.6,0.4];
 		data.range = [0,100];
+		updateRange();
 		renderGraph();	
 	};
 	
@@ -24,6 +25,9 @@ var Graph = function(opts){
 	};
 	
 	var updateGraph = function() {
+		x = d3.scale.linear().domain([0, data.points.length]).range([0, w]);
+		y = d3.scale.linear().domain(data.range).range([h, 0]);
+		
 		vis.selectAll("path.graph-data")
 			.transition()
 			.duration(100)
@@ -31,8 +35,6 @@ var Graph = function(opts){
 	};
 	
 	var renderGraph = function() {
-		x = d3.scale.linear().domain([0, data.points.length]).range([0, w]);
-		y = d3.scale.linear().domain(data.range).range([h, 0]);
 		
 		time = function(i) {
 			var t = new Date(data.startTime);
