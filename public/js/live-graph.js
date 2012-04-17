@@ -119,7 +119,7 @@ var Graph = function(opts){
 	
 	 //dynamicTimeTicks(vis,data,data,10);	 
 	 var yrule = vis.selectAll("g.y")
-	     .data(y.ticks(5))
+	     .data(y.ticks(3))
 	     .enter().append("svg:g")
 	     .attr("class", "y");
 	 
