@@ -35,6 +35,8 @@ var Graph = function(opts){
 	};
 	
 	var renderGraph = function() {
+		x = d3.scale.linear().domain([0, data.points.length]).range([0, w]);
+		y = d3.scale.linear().domain(data.range).range([h, 0]);
 		
 		time = function(i) {
 			var t = new Date(data.startTime);
