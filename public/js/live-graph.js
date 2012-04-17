@@ -1,6 +1,5 @@
 var Graph = function(opts){
 	var vis,data,el,p,w,h,x,y,line,vis, size, time;
-	init(opts);
 	var init = function(options) {
 		el = options.el;
 		w = $(el).width();
@@ -279,5 +278,9 @@ var Graph = function(opts){
     return "";
   else
     return results[1];
-};		
+};	
+	
+	init(opts);
+	return {addPoint:addPoint};
+		
 };
