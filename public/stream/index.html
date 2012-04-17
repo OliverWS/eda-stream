@@ -1,12 +1,11 @@
 <html>
 	<head>
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-		<script src="/js/socket.io.js"></script>
+		<script src="../js/socket.io.js"></script>
 		<script>
-		  var socket = io.connect('/');
+		  var socket = io.connect('http://live.ollie.ws:8080');
 		  socket.on('packet', function (data) {
-		    console.log(data);
-		    $("body").append($("<div>").html(data.toString()));
+		    $("body").prepend($("<div>").text(">>"+data.payload));
 		  });
 		</script>
 	</head>
