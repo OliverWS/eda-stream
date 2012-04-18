@@ -80,7 +80,6 @@ io.sockets.on('connection', function (socket) {
   console.log("Clients: " + clients.toString());
   socket.emit('start', { message: 'Starting...' });
   socket.on('disconnect', function (socket) {
-  	socket.active = false;
   	removeClient(socket);
   });
   
