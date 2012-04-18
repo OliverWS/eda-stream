@@ -90,7 +90,12 @@ app.get('/', function(req, res){
 });
 app.post('/', function(req, res){
   res.send(200);
-  io.sockets.clients().emit('packet', req.body);
+  var connectedClients = io.sockets.clients();
+  for(var i=0; i < connectedClients; i++){
+  	  if(connectedClients[i] != undefined){
+     	connectedClients[i].emit('packet', req.body);
+      }
+  }
 });
 
 http.createServer(app).listen(80);
