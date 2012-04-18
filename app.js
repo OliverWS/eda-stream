@@ -89,11 +89,11 @@ app.get('/', function(req, res){
 
 });
 app.post('/', function(req, res){
-  res.send(200);
-  console.log(req.body);
-io.sockets.clients().forEach(function(s) {
- 	s.emit('packet', req.body);
-}
+  	res.send(200);
+ 	console.log(req.body);
+	io.sockets.clients().forEach(function(s) {
+ 		s.emit('packet', req.body);
+	});
 });
 
 http.createServer(app).listen(80);
