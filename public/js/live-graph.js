@@ -7,9 +7,11 @@ var Graph = function(opts){
 	var init = function(options) {
 		el = options.el;
 		p = options.pad || 50;
-		w = $(el).width() - 2*p;
+		w = $(el).width() - 4*p;
 		h = $(el).height() - 2*p;
-		label = options.label || "graph";
+		label = options.label || null;
+		fill = options.fill || "none";
+		stroke = options.stroke || null;
 		data = {};
 		size = options.size || 300;
 		data.points = [];
@@ -104,11 +106,13 @@ var Graph = function(opts){
 		    .attr("height", h + 2*p)
 		    .on('mousedown',mousedown)			    
 		  .append("g")
-		    .attr("transform", "translate(" + p + "," + p + ")");
+		    .attr("transform", "translate(" + 2*p + "," + p + ")");
 		renderGrid();
 		vis.append("path")
 			.attr("d", line(data.points))
 		    .attr("class", "graph-data")
+		    .style("fill",fill)
+		    .style("stroke",stroke)
 		    .attr("id",label)
 		
 	};
@@ -168,10 +172,10 @@ var Graph = function(opts){
 	 	.attr("x", 0)
 	 	.attr("y", h/2)
 	 	.attr("dy", "0em")
-	 	.attr("dx", "-"+p+"px")
+	 	.attr("dx", "-"+2*p+"px")
 	 	.attr("text-anchor", "left")
-	 	.text("EDA (" + "\u03BC"  + "S)");
-	 
+	 	.text(label);
+	 /*
 	 vis.append("svg:text")
 	 	.attr("class", "title")
 	 	.attr("x", w/2)
@@ -179,7 +183,8 @@ var Graph = function(opts){
 	 	.attr("dy", "-"+p/4+"px")
 	 	.attr("dx", 0)
 	 	.attr("text-anchor", "middle")
-	 	.text(label);		
+	 	.text(title);
+	 */		
 };
 		
 	var dynamicTimeTicks = function (vis,data, event, numTicks) {

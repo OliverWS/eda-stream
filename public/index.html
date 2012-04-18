@@ -30,15 +30,21 @@
 		  $(document).ready(function() {
 		  	setStatus(OFF);
 		  	socket = io.connect('http://live.ollie.ws:8080');
-		  	edaGraph = new Graph({ el:"#eda", pad:125, size:600});
-		  	//xGraph = new Graph({ el:"#accx", pad:125, size:600, label:"X"});
+		  	edaGraph = new Graph({ el:"#eda", label:"EDA (" + "\u03BC"  + "S)", pad:50, size:600, stroke:"#2CC4FF", fill:"#B6E1F2"});
+		  	motionGraph = new Graph({ el:"#motion", pad:50, size:600, label:"Motion", stroke:"red"});
 		  	$("div.loading").fadeOut();
 		  	socket.on('packet', function (data) {
 		  		setStatus(true);
 		  		resetTimer();
 		    	var line = data.payload.replace("\r\n","").split(",");
 		    	edaGraph.addPoint(parseFloat( line[line.length-1] ));
-		    	//xGraph.addPoint(parseFloat( line[3] ));
+		    	var x = parseFloat( line[3] );
+		    	var y = parseFloat( line[2] );
+		    	var z = parseFloat( line[1] );
+		    	var m = Math.sqrt(x*x + y*y + z*z);
+		    	motionGraph.addPoint(m);
+		    	
+		    	
 		 	});
 		 	
 		 	
@@ -69,13 +75,13 @@
 						</div>
 					</div>
 					<div class="row-fluid">
-						<div id="eda" style="width: 100%; height:100%;"></div>
+						<div id="eda" style="width: 100%; height:50%;"></div>
+						<div id="motion" style="width: 100%; height:25%;"></div>
 					</div>
-					<div class="row-fluid hide">
-						<div id="accx" style="width: 100%; height:100%;"></div>
-					</div>
+					
 				</div>
 			</div>
+			
 		</div>
 		
 	
