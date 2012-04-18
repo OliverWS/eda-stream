@@ -37,6 +37,7 @@
 		  		setStatus(true);
 		  		resetTimer();
 		    	var line = data.payload.replace("\r\n","").split(",");
+		    	console.log(line);
 		    	edaGraph.addPoint(parseFloat( line[line.length-1] ));
 		    	xGraph.addPoint(parseFloat( line[3] ));
 		 	});

@@ -61,22 +61,9 @@ io.configure('production', function(){
   ]);
 });
 
-var removeClient = function(sock){
-	var activeClients = clients.slice(0);
-	for(var i=0; i < clients.length; i++){
-		if(clients[i] != sock){
-			activeClients.push(clients[i]);
-		}
-	}
-	clients = activeClients;
-
-};
 
 
 io.sockets.on('connection', function (socket) {
-  if(clients.indexOf(socket) < 0){
-  	clients.push(socket);
-  }
   console.log("Clients: " + clients.toString());
   socket.emit('start', { message: 'Starting...' });
   socket.on('disconnect', function (socket) {
@@ -103,11 +90,7 @@ app.get('/', function(req, res){
 });
 app.post('/', function(req, res){
   res.send(200);
-  for(var i=0; i < clients.length; i++){
-  	  if(clients[i] != undefined){
-     	clients[i].emit('packet', req.body);
-      }
-  }
+  io.sockets.clients().emit('packet', req.body);
 });
 
 http.createServer(app).listen(80);
