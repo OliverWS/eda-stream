@@ -13,7 +13,10 @@
 		  	graph = new Graph(opts);
 		  	socket.on('packet', function (data) {
 		    	var line = data.payload.replace("\r\n","").split(",");
-		    	graph.addPoint(parseFloat(line[line.length-1]));
+		    	var p = parseFloat( line[line.length-1] );
+		    	if(p != NaN){
+		    		graph.addPoint(p);
+		    	}
 		 	});
 		 	
 		 	
