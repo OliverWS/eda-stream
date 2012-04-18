@@ -38,15 +38,16 @@ var Graph = function(opts){
 	};
 	
 	var addPoint = function(dp) {
-		if(dp == NaN || dp == undefined){return;}
-		data.points.push(dp);
+		if((dp != NaN) && (dp != undefined)){
+			data.points.push(dp);
 		
-		if(data.points.length > size){
-			data.points.shift();
+			if(data.points.length > size){
+				data.points.shift();
+			}
+		
+			updateRange();
+			updateGraph();
 		}
-		
-		updateRange();
-		updateGraph();
 	};
 	
 	var updateGraph = function() {
@@ -134,6 +135,7 @@ var Graph = function(opts){
 	var renderGrid = function() {
 		var background = vis.append("svg:rect")
 							.attr("class", "background")
+							.style("fill","white")
 							.attr("x",0)
 							.attr("y",0)
 							.attr("width",w)

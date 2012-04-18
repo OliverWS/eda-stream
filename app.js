@@ -61,7 +61,16 @@ io.configure('production', function(){
   ]);
 });
 
+var removeClient = function(sock){
+	var activeClients = clients.slice(0);
+	for(var i=0; i < clients.length; i++){
+		if(clients[i] != sock){
+			activeClients.push(clients[i]);
+		}
+	}
+	clients = activeClients;
 
+};
 
 
 io.sockets.on('connection', function (socket) {
@@ -69,7 +78,8 @@ io.sockets.on('connection', function (socket) {
   console.log("Clients: " + clients.toString());
   socket.emit('start', { message: 'Starting...' });
   socket.on('disconnect', function (socket) {
-  	console.log("Socket disconnected");
+  	socket.active = false;
+  	removeClient(socket);
   });
   
 });
