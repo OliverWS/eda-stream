@@ -74,7 +74,9 @@ var removeClient = function(sock){
 
 
 io.sockets.on('connection', function (socket) {
-  clients.push(socket);
+  if(clients.indexOf(socket) < 0){
+  	clients.push(socket);
+  }
   console.log("Clients: " + clients.toString());
   socket.emit('start', { message: 'Starting...' });
   socket.on('disconnect', function (socket) {
