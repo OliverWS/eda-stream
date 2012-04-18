@@ -31,13 +31,12 @@
 		  	setStatus(OFF);
 		  	socket = io.connect('http://live.ollie.ws:8080');
 		  	edaGraph = new Graph({ el:"#eda", pad:125, size:600});
-		  	xGraph = new Graph({ el:"#accx", pad:125, size:600, label:"X"});
+		  	//xGraph = new Graph({ el:"#accx", pad:125, size:600, label:"X"});
 		  	$("div.loading").fadeOut();
 		  	socket.on('packet', function (data) {
 		  		setStatus(true);
 		  		resetTimer();
 		    	var line = data.payload.replace("\r\n","").split(",");
-		    	console.log(line);
 		    	edaGraph.addPoint(parseFloat( line[line.length-1] ));
 		    	//xGraph.addPoint(parseFloat( line[3] ));
 		 	});
