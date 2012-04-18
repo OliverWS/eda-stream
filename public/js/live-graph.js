@@ -7,8 +7,8 @@ var Graph = function(opts){
 	var init = function(options) {
 		el = options.el;
 		p = options.pad || 50;
-		w = $(el).width() - 4*p;
-		h = $(el).height() - 2*p;
+		w = $(el).width() - 2*p;
+		h = $(el).height() - p;
 		label = options.label || null;
 		fill = options.fill || "none";
 		stroke = options.stroke || null;
@@ -160,7 +160,7 @@ var Graph = function(opts){
 	     .attr("y2", y);
 	 yrule.append("svg:text")
 	     .attr("class", "yText")
-	     .attr("x", -3)
+	     .attr("x", -6)
 	     .attr("y", y)
 	     .attr("dy", ".35em")
 	     .attr("text-anchor", "end")
