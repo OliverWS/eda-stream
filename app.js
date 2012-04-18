@@ -75,11 +75,6 @@ io.sockets.on('connection', function (socket) {
 });
 
 
-app.get('/', function(req, res){
-	
-
-
-});
 app.post('/', function(req, res){
   res.send(200);
   for(var i=0; i < clients.length; i++){
