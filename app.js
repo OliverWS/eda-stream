@@ -75,6 +75,21 @@ io.sockets.on('connection', function (socket) {
 });
 
 
+app.get('/', function(req, res){
+  fs.readFile(__dirname + '/public/index.html',
+  function (err, data) {
+    if (err) {
+      res.writeHead(500);
+      return res.end('Error loading index.html');
+    }
+
+    res.writeHead(200);
+    res.end(data);
+  });
+	
+
+
+});
 app.post('/', function(req, res){
   res.send(200);
   for(var i=0; i < clients.length; i++){
