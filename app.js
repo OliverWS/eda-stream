@@ -64,10 +64,10 @@ io.configure('production', function(){
 
 
 io.sockets.on('connection', function (socket) {
-  console.log("Clients: " + io.sockets.clients().toString());
+  console.log("Clients: " + io.sockets.clients().length.toString());
   socket.emit('start', { message: 'Starting...' });
   socket.on('disconnect', function (socket) {
-  	socket.end();
+  	console.log("Socket disconnected!");
   });
   
 });
