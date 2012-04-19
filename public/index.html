@@ -35,6 +35,8 @@
 		  	motionGraph = new Graph({ el:"#motion", pad:50, size:600, label:"Motion", stroke:"red"});
 		  	$("div.loading").fadeOut();
 		  	socket.on('packet', function (data) {
+		  		console.log("Packet");
+		  		console.log(data);
 		  		setStatus(true);
 		  		resetTimer();
 		  		for(var n=0; n < data.count; n++){

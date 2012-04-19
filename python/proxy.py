@@ -9,16 +9,18 @@ import serial
 import time
 import urllib
 import urllib2
-from multiprocessing import Pool, Process
+import json
+from multiprocessing import Pool, Process, Lock
 def push(packets, host):
 	try:
 		data = {"packets":[], "count":len(packets)}
 		for packet in packets:
 			data["packets"].append({"payload":packet})
-		req = urllib2.Request(host,data=urllib.urlencode(data))
+		post_data = json.dumps({"data":data})
+		req = urllib2.Request(host,data=post_data)
 		urllib2.urlopen(req)
 	except exceptions.Exception as e:
-		logging.error("Problem pushing packet to host: %s"%(self.host))
+		logging.error("Problem pushing packet to host: %s"%(host))
 		logging.error(str(e))		
 
 class proxy:
@@ -30,26 +32,12 @@ class proxy:
 		self.serial = self.serial_connect(port, retries)
 		self.thread_count = 3
 		self.debug = True
+		self.lock = Lock()
 		self.threads = Pool(processes=3) #
 		self.run = False
 	
-	def check_input(self,cmd):
-		while True:
-			user_input = raw_input()
-			if "debug" in user_input:
-				if "ON" in user_input:
-					self.debug = True
-					print "Debug ON"
-				elif "OFF" in user_input:
-					self.debug = False
-					print "Debug OFF"
-			elif "quit" in user_input or user_input[0] == "q" or cmd in user_input:
-				self.run = False
-				break
-	
 	def start(self):
 		self.run = True
-		p = Process(target=self.=check_input, args=('q',))
 		self.poll();
 	
 	def poll(self):
@@ -57,21 +45,27 @@ class proxy:
 		while (n==0 or self.serial_connect(self.port,retries=10) != False) and self.run:
 			self.serial.flush()
 			try:
-				buffer = []
-				for line in self.serial:
-					if not self.run:
-						self.threads.close()
-						break
-					n += 1
-					if self.debug:
-						logging.info(">>" + line)
-					buffer.append(line)
-					if n%self.opts.downsample == 0:
-						self.threads.apply_async(push, [buffer, self.host])
-						buffer = []
-			except:
-				self.serial_connected = False
-				logging.error("Lost connection... retrying")
+				try:
+					buffer = []
+					for line in self.serial:
+						if not self.run:
+							self.threads.close()
+							break
+						n += 1
+						if self.debug:
+							logging.info(">>" + line)
+						buffer.append(line)
+						if n%self.opts.downsample == 0:
+							#self.threads.apply_async(push, [buffer, self.host])
+							push(buffer,self.host)
+							buffer = []
+				except (serial.SerialException, serial.SerialTimeoutException, IOError):
+					self.serial_connected = False
+					logging.error("Lost connection... retrying")
+			except (KeyboardInterrupt, SystemExit):
+			    logging.warning("Exiting...")
+			    self.run = False
+			    self.threads.close()				
 		
 	
 	def serial_connect(self, port, retries=10):
@@ -93,6 +87,7 @@ class proxy:
 				logging.error("Error connecting to serial port %s. Try #%d"%(port,tries))
 				time.sleep(fib(tries))
 		if self.serial_connected:
+			logging.info("Connected to sensor: %s"%(port))
 			self.serial = ser
 			return self.serial
 		else:
