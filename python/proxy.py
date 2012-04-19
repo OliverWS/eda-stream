@@ -16,7 +16,7 @@ def push(packets, host):
 		data = {"packets":[], "count":len(packets)}
 		for packet in packets:
 			data["packets"].append({"payload":packet})
-		post_data = json.dumps({"data":data})
+		post_data = urllib.urlencode({"data":json.dumps(data)})
 		req = urllib2.Request(host,data=post_data)
 		urllib2.urlopen(req)
 	except exceptions.Exception as e:

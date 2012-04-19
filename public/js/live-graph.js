@@ -23,7 +23,7 @@ var Graph = function(opts){
 	};
 	
 	var updateRange = function() {
-		data.range = [d3.min(data.points),d3.max(data.points)*1.1];	
+		data.range = [d3.min(data.points)*0.9,d3.max(data.points)*1.1];	
 	};
 	
 	var setSize = function(s) {
@@ -81,7 +81,7 @@ var Graph = function(opts){
 		
 		vis.selectAll("path.graph-data")
 			.transition()
-			.duration(1)
+			.duration(0)
 			.attr("d", line(points))	
 	};
 	

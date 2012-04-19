@@ -3,7 +3,6 @@
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 		<script src="js/socket.io.js"></script>
 		<script src="js/live-graph.js"></script>
-		<script src="js/lastfm.js"></script>
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/d3/2.8.1/d3.v2.min.js" type="text/javascript"></script>
 		<link rel="stylesheet" href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" type="text/css" />
 		<script>
@@ -31,8 +30,8 @@
 		  $(document).ready(function() {
 		  	setStatus(OFF);
 		  	socket = io.connect('http://live.ollie.ws:8080');
-		  	edaGraph = new Graph({ el:"#eda", label:"EDA (" + "\u03BC"  + "S)", pad:50, size:600, stroke:"#2CC4FF", fill:"#B6E1F2"});
-		  	motionGraph = new Graph({ el:"#motion", pad:50, size:600, label:"Motion", stroke:"red"});
+		  	edaGraph = new Graph({ el:"#eda", label:"EDA (" + "\u03BC"  + "S)", pad:50, size:1200, stroke:"#2CC4FF", fill:"#B6E1F2"});
+		  	motionGraph = new Graph({ el:"#motion", pad:50, size:1200, label:"Motion", stroke:"red"});
 		  	$("div.loading").fadeOut();
 		  	socket.on('packet', function (data) {
 		  		console.log("Packet");
@@ -41,11 +40,11 @@
 		  		resetTimer();
 		  		for(var n=0; n < data.count; n++){
 		  			var line = data.packets[n].payload.replace("\r\n","").split(",");
-		  			edaGraph.addPoint(parseFloat( line[line.length-1] ));
 		  			var x = parseFloat( line[3] );
 		  			var y = parseFloat( line[2] );
 		  			var z = parseFloat( line[1] );
 		  			var m = Math.sqrt(x*x + y*y + z*z);
+		  			edaGraph.addPoint(parseFloat( line[line.length-1] ));
 		  			motionGraph.addPoint(m);
 		  		}
 		    	
