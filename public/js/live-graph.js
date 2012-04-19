@@ -186,7 +186,7 @@ var Graph = function(opts){
 	 	.text(title);
 	 */		
 };
-		
+	
 	var dynamicTimeTicks = function (vis,data, event, numTicks) {
 		d3.selectAll(".time-grid").remove();
 		var startTime = new Date(event.startTime);

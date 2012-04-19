@@ -3,6 +3,7 @@
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 		<script src="js/socket.io.js"></script>
 		<script src="js/live-graph.js"></script>
+		<script src="js/lastfm.js"></script>
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/d3/2.8.1/d3.v2.min.js" type="text/javascript"></script>
 		<link rel="stylesheet" href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" type="text/css" />
 		<script>
@@ -36,13 +37,15 @@
 		  	socket.on('packet', function (data) {
 		  		setStatus(true);
 		  		resetTimer();
-		    	var line = data.payload.replace("\r\n","").split(",");
-		    	edaGraph.addPoint(parseFloat( line[line.length-1] ));
-		    	var x = parseFloat( line[3] );
-		    	var y = parseFloat( line[2] );
-		    	var z = parseFloat( line[1] );
-		    	var m = Math.sqrt(x*x + y*y + z*z);
-		    	motionGraph.addPoint(m);
+		  		for(var n=0; n < data.count; n++){
+		  			var line = data.packets[n].payload.replace("\r\n","").split(",");
+		  			edaGraph.addPoint(parseFloat( line[line.length-1] ));
+		  			var x = parseFloat( line[3] );
+		  			var y = parseFloat( line[2] );
+		  			var z = parseFloat( line[1] );
+		  			var m = Math.sqrt(x*x + y*y + z*z);
+		  			motionGraph.addPoint(m);
+		  		}
 		    	
 		    	
 		 	});
@@ -57,6 +60,7 @@
 			<div class="page-header">
 				<div class="row-fluid">
 					<div class="span10"><h1>OliverWS</h1></div>
+					<div id="song" class="span2 pull-right"></div>
 					<div class="span2 pull-right"><h4 class="stream-status">Stream is <span class="badge">OFF</span></h4></div>
 				</div>
 			</div>
