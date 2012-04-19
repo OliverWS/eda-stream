@@ -84,7 +84,7 @@ var Graph = function(opts){
 		
 		vis.selectAll("path.graph-data")
 			.transition()
-			.duration(0)
+			.duration(62)
 			.attr("d", line(points))	
 	};
 	

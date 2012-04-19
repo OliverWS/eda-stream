@@ -30,10 +30,10 @@ class proxy:
 		self.port = port
 		self.serial_connected = False
 		self.serial = self.serial_connect(port, retries)
-		self.thread_count = 3
+		self.thread_count = 1
 		self.debug = True
 		self.lock = Lock()
-		self.threads = Pool(processes=3) #
+		self.threads = Pool(processes=1) #
 		self.run = False
 	
 	def start(self):
@@ -56,8 +56,7 @@ class proxy:
 							logging.info(">>" + line)
 						buffer.append(line)
 						if n%self.opts.downsample == 0:
-							#self.threads.apply_async(push, [buffer, self.host])
-							push(buffer,self.host)
+							self.threads.apply_async(push, [buffer, self.host])
 							buffer = []
 				except (serial.SerialException, serial.SerialTimeoutException, IOError):
 					self.serial_connected = False
