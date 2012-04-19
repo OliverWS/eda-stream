@@ -90,6 +90,7 @@ app.get('/', function(req, res){
 });
 app.post('/', function(req, res){
   	res.send(200);
+  	console.log(req.body)
  	var data = JSON.parse(req.body.data)
 	io.sockets.clients().forEach(function(s) {
  		s.emit('packet', data);
