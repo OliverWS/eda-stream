@@ -30,8 +30,8 @@
 		  $(document).ready(function() {
 		  	setStatus(OFF);
 		  	socket = io.connect('http://live.ollie.ws:8080');
-		  	edaGraph = new Graph({ el:"#eda", label:"EDA (" + "\u03BC"  + "S)", pad:50, size:1000, stroke:"#2CC4FF", fill:"#B6E1F2"});
-		  	motionGraph = new Graph({ el:"#motion", pad:50, size:1000, label:"Motion", stroke:"red"});
+		  	edaGraph = new Graph({ el:"#eda", label:"EDA (" + "\u03BC"  + "S)", pad:50, size:'auto', stroke:"#2CC4FF", fill:"#B6E1F2"});
+		  	motionGraph = new Graph({ el:"#motion", pad:50, size:'auto', label:"Motion", stroke:"red"});
 		  	$("div.loading").fadeOut();
 		  	socket.on('packet', function (data) {
 		  		console.log("Packet");

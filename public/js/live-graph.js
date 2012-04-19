@@ -13,7 +13,10 @@ var Graph = function(opts){
 		fill = options.fill || "none";
 		stroke = options.stroke || null;
 		data = {};
-		size = options.size || 300;
+		size = options.size || 'auto';
+		if( size == 'auto'){
+			size = w;
+		}
 		data.points = [];
 		for(var i=0; i < size; i++){data.points.push(0.0);}
 		data.range = [0,100];
