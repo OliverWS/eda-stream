@@ -8,6 +8,6 @@
   "dependencies": {
     "socket.io": "0.9.1-1",
     "node-logging": "0.1.3",
-    "express": "2.5.5",
+    "express": "2.5.5"
   }
 }
