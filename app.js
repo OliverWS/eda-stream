@@ -3,104 +3,34 @@
  * Module dependencies.
  */
 
-var express = require('express')
-  , routes = require('./routes')
-  , http = require('http');
+var express = require('express');
+var sys = require('sys');
+var logging = require('node-logging');
+logging.setLevel('error');
 
-var app = express();
-var io = require('socket.io').listen(8080);
-var n = 0;
+var app = express.createServer();
+app.listen(process.env.PORT || 3001);
+var io = require('socket.io').listen(app);
 var clients = new Array();
+app.use(express.static(__dirname + '/public'));
 
-app.use(express.methodOverride());
 
-// ## CORS middleware
-// 
-// see: http://stackoverflow.com/questions/7067966/how-to-allow-cors-in-express-nodejs
-var allowCrossDomain = function(req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', (req.headers.origin || "*"));
-    res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    res.setHeader('Access-Control-Allow-Credentials', 'true');
-    // intercept OPTIONS method
-    if ('OPTIONS' == req.method) {
-      res.send(200);
-    }
-    else {
-      next();
-    }
-};
 
-app.configure(function(){
-  app.set('views', __dirname + '/views');
-  app.set('view engine', 'jade');
-  app.use(express.favicon());
-  app.use(express.static(__dirname + '/public'));
-  app.use(express.bodyParser());
-  app.use(express.methodOverride());
-  app.use(app.router);
-  app.use(allowCrossDomain);
-  
+
+io.configure(function () { 
+  io.set("transports", ["xhr-polling"]); 
+  io.set("polling duration", 10); 
 });
 
 
+io.sockets.on('connection', function (socket) { 
+    console.log("Socket connected! ");
+    socket.on('packet', function (data) {io.sockets.emit("packet",data); });
+    socket.on('disconnect', function () {
+      console.log("Socket disconnected!");
 
-io.configure('production', function(){
-  io.enable('browser client etag');
-
-  io.enable('browser client minification');  // send minified client
-  io.enable('browser client etag');          // apply etag caching logic based on version number
-  io.enable('browser client gzip');          // gzip the file
-  io.set('log level', 10);  
-  io.set('destroy upgrade', false);                  // reduce logging
-  io.set('transports', [                     // enable all transports (optional if you want flashsocket)
-      'websocket'
-    , 'flashsocket'
-    , 'htmlfile'
-    , 'xhr-polling'
-    , 'jsonp-polling'
-  ]);
+    });
 });
 
-
-
-io.sockets.on('connection', function (socket) {
-  console.log(socket);
-  console.log("Clients: " + io.sockets.clients().length.toString());
-  socket.emit('start', { message: 'Starting...' });
-  socket.on('disconnect', function (socket) {
-  	console.log("Socket disconnected!");
-  });
-  
-});
-
-
-
-
-app.get('/', function(req, res){
-  fs.readFile(__dirname + '/public/index.html',
-  function (err, data) {
-    if (err) {
-      res.writeHead(500);
-      return res.end('Error loading index.html');
-    }
-
-    res.writeHead(200);
-    res.end(data);
-  });
-	
-
-
-});
-app.post('/', function(req, res){
-  	res.send(200);
-  	console.log(req.body)
- 	var data = JSON.parse(req.body.data)
-	io.sockets.clients().forEach(function(s) {
- 		s.emit('packet', data);
-	});
-});
-
-http.createServer(app).listen(8000);
 
 console.log("Express server listening on port 80");

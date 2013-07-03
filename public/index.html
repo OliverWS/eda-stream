@@ -1,7 +1,7 @@
 <html>
 	<head>
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-		<script src="js/socket.io.js"></script>
+		<script src="/socket.io/socket.io.js"></script>
 		<script src="js/live-graph.js"></script>
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/d3/2.8.1/d3.v2.min.js" type="text/javascript"></script>
 		<link rel="stylesheet" href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" type="text/css" />
@@ -29,7 +29,7 @@
 		  
 		  $(document).ready(function() {
 		  	setStatus(OFF);
-		  	socket = io.connect('http://live.ollie.ws:8080');
+		  	socket = io.connect('/');
 		  	edaGraph = new Graph({ el:"#eda", label:"EDA (" + "\u03BC"  + "S)", pad:50, size:'auto', stroke:"#2CC4FF", fill:"#B6E1F2"});
 		  	motionGraph = new Graph({ el:"#motion", pad:50, size:'auto', label:"Motion", stroke:"red"});
 		  	$("div.loading").fadeOut();
