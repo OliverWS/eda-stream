@@ -6,7 +6,7 @@
 var express = require('express');
 var sys = require('sys');
 var logging = require('node-logging');
-logging.setLevel('debug');
+logging.setLevel('warn');
 
 var app = express.createServer();
 app.listen(process.env.PORT || 3001);
