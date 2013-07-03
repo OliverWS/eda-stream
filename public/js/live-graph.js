@@ -83,8 +83,6 @@ var Graph = function(opts){
 			.text(function(d,i) {return d.toFixed(2).toString()});
 		
 		vis.selectAll("path.graph-data")
-			.transition()
-			.duration(62)
 			.attr("d", line(points))	
 	};
 	
