@@ -25,7 +25,10 @@ io.configure(function () {
 
 io.sockets.on('connection', function (socket) { 
     console.log("Socket connected! ");
-    socket.on('packet', function (data) {io.sockets.emit("packet",data); });
+    socket.on('packet', function (data) {
+    	console.log("Recieved Packet: " + data)
+    	io.sockets.emit("packet",data);
+    });
     socket.on('disconnect', function () {
       console.log("Socket disconnected!");
 
