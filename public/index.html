@@ -34,19 +34,18 @@
 		  	motionGraph = new Graph({ el:"#motion", pad:50, size:'auto', label:"Motion", stroke:"red"});
 		  	$("div.loading").fadeOut();
 		  	socket.on('packet', function (data) {
-		  		console.log("Packet");
 		  		console.log(data);
-		  		setStatus(true);
-		  		resetTimer();
-		  		for(var n=0; n < data.count; n++){
-		  			var line = data.packets[n].payload.replace("\r\n","").split(",");
-		  			var x = parseFloat( line[3] );
-		  			var y = parseFloat( line[2] );
-		  			var z = parseFloat( line[1] );
-		  			var m = Math.sqrt(x*x + y*y + z*z);
-		  			edaGraph.addPoint(parseFloat( line[line.length-1] ));
-		  			motionGraph.addPoint(m);
-		  		}
+		  		// setStatus(true);
+		  		// resetTimer();
+		  		// for(var n=0; n < data.count; n++){
+		  		// 	var line = data.packets[n].payload.replace("\r\n","").split(",");
+		  		// 	var x = parseFloat( line[3] );
+		  		// 	var y = parseFloat( line[2] );
+		  		// 	var z = parseFloat( line[1] );
+		  		// 	var m = Math.sqrt(x*x + y*y + z*z);
+		  		// 	edaGraph.addPoint(parseFloat( line[line.length-1] ));
+		  		// 	motionGraph.addPoint(m);
+		  		// }
 		    	
 		    	
 		 	});
