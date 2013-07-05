@@ -41,7 +41,8 @@ var Graph = function(opts){
 	};
 	
 	var addPoint = function(dp) {
-		if((dp != NaN) && (dp != undefined)){
+		console.log("Adding datapoint: " + dp);
+		if((dp != NaN) && (dp != undefined) && (dp != "")){
 			data.points.push(dp);
 		
 			if(data.points.length > size){
