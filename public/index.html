@@ -37,7 +37,7 @@
 		  		console.log(data);
 		  		setStatus(true);
 		  		resetTimer();
-	  			var line = data.packets[n].payload.replace("\r\n","").split(",");
+	  			var line = data.replace("\r\n","").split(",");
 	  			var x = parseFloat( line[3] );
 	  			var y = parseFloat( line[2] );
 	  			var z = parseFloat( line[1] );
