@@ -35,8 +35,8 @@
 		  	$("div.loading").fadeOut();
 		  	socket.on('packet', function (data) {
 		  		console.log(data);
-		  		// setStatus(true);
-		  		// resetTimer();
+		  		setStatus(true);
+		  		resetTimer();
 		  		// for(var n=0; n < data.count; n++){
 		  		// 	var line = data.packets[n].payload.replace("\r\n","").split(",");
 		  		// 	var x = parseFloat( line[3] );
