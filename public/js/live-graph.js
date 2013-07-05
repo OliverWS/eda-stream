@@ -41,7 +41,6 @@ var Graph = function(opts){
 	};
 	
 	var addPoint = function(dp) {
-		console.log("Adding datapoint: " + dp);
 		if((dp != NaN) && (dp != undefined) && (dp != "")){
 			data.points.push(dp);
 		
@@ -51,6 +50,11 @@ var Graph = function(opts){
 		
 			updateRange();
 			updateGraph();
+			console.log("Adding datapoint: " + dp);
+
+		}
+		else {
+			console.log("Rejecting datapoint: " + dp);
 		}
 	};
 	
