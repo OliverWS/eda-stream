@@ -1,6 +1,4 @@
 Array.prototype.clone = function() { return this.slice(0); }
-var console = {};
-console.log = window.console.log || function() {};
 
 var Graph = function(opts){
 	var vis,data,el,p,w,h,x,y,line,vis, size, time;
