@@ -29,7 +29,7 @@ var io = require('socket.io').listen(app, { log: false });
 
 var eda_cache = {};
 var NUM_SAMPLES_TO_STORE = 8*10;
-var DEFAULT_ENDPOINT = "https://physio-glass.appspot.com/physio/";
+var DEFAULT_ENDPOINT = "https://physio-glass.appspot.com/physio";
 
 
 
