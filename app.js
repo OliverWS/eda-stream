@@ -77,7 +77,7 @@ io.sockets.on('connection', function (socket) {
 			memjs.get(packet.id+"", function(userid) {
 				console.log("Stored data for " + packet.id + " is " + userid);
 				var endpoint = DEFAULT_ENDPOINT;
-				request.post(endpoint).form({EDA:eda_cache[packet.id], userid:userid});
+				request.post(endpoint, {form:{EDA:eda_cache[packet.id], userid:userid}});
 				eda_cache[packet.id] = [];
 				
 			});
