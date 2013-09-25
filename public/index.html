@@ -59,8 +59,8 @@
 	  			var z = parseFloat( line[1] );
 	  			var m = Math.sqrt(x*x + y*y + z*z);
 	  			var eda = parseFloat( line[line.length-1] );
-	  			if(data.indexOf(",,,") == -1) edaGraph.addPoint(eda);
-	  			if(data.indexOf(",,,") == -1) motionGraph.addPoint(m);
+	  			if(line.indexOf(",,,") == -1) edaGraph.addPoint(eda);
+	  			if(line.indexOf(",,,") == -1) motionGraph.addPoint(m);
 		  }
 		</script>
 	</head>
