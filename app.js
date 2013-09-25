@@ -75,6 +75,9 @@ io.sockets.on('connection', function (socket) {
       	}
       	if (eda_cache[packet.id].length >= NUM_SAMPLES_TO_STORE) {
 			memjs.get(packet.id, function(err, userid) {
+				if (err) {
+					console.log("Error!!!");
+				}
 				console.log("Stored data for " + packet.id + " is " + userid);
 				var endpoint = DEFAULT_ENDPOINT;
 				request.post(endpoint).form({EDA:eda_cache[packet.id], userid:userid});
