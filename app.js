@@ -42,7 +42,7 @@ app.get("/stream/:id", function(req, res) {
 
 app.post("/register/:sensorid", function(req,res) {
 	console.log(req.params);
-	memjs.set(req.params.sensorid, request.params.endpoint);
+	memjs.set(req.params.sensorid, request.body.endpoint);
 	res.send("{'status':'registered'}");		
 });
 app.post("/unregister/:sensorid", function(req,res) {
