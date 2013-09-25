@@ -21,7 +21,7 @@ app.use(express.errorHandler({
 var io = require('socket.io').listen(app, { log: false });
 
 var eda_cache = {};
-var NUM_SAMPLES_TO_STORE = 8*60;
+var NUM_SAMPLES_TO_STORE = 8*10;
 
 app.use(express.static(__dirname + '/public'));
 
@@ -55,7 +55,7 @@ io.sockets.on('connection', function (socket) {
       		eda_cache[packet.id] = new Array();
       	}
       	var eda = parseFloat(packet.payload.split(",")[packet.payload.split(",").length-1])
-      	console.log("EDA value is: " + eda);
+      	console.log("EDA value is: " + eda +" | Sample Number: " + eda_cache[packet.id].length);
       	eda_cache[packet.id].push(eda);
         console.log("ID: " +packet.id + " | Payload: " + packet.payload);
         io.sockets.emit(packet.id,packet.payload);
