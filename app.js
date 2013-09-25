@@ -51,7 +51,7 @@ io.sockets.on('connection', function (socket) {
       		eda_cache[packet.id] = new Array();
       	}
       	if (eda_cache[packet.id].length >= NUM_SAMPLES_TO_STORE) {
-      		console.log("Latest Max EDA for " + packet.id + " is : " + Math.max(eda_cache[packet.id]));
+      		console.log("Latest Max EDA for " + packet.id + " is : " + eda_cache[packet.id].max());
       		eda_cache[packet.id] = new Array();
       	}
       	var eda = parseFloat(packet.payload.split(",")[packet.payload.split(",").length-1])
