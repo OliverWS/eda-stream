@@ -47,7 +47,7 @@ app.post("/register/:sensorid", function(req,res) {
 	console.log(req.body);
 	console.log(req.body.userid);
 	var error = memjs.set(req.params.sensorid+"", req.body.userid+"");
-	console.log(error);
+	if(error) console.log(error);
 	res.send("{'status':'registered'}");		
 });
 app.post("/unregister/:sensorid", function(req,res) {
@@ -74,10 +74,7 @@ io.sockets.on('connection', function (socket) {
       		eda_cache[packet.id] = new Array();
       	}
       	if (eda_cache[packet.id].length >= NUM_SAMPLES_TO_STORE) {
-			memjs.get(packet.id, function(err, userid) {
-				if (err) {
-					console.log("Error!!!");
-				}
+			memjs.get(packet.id+"", function(userid) {
 				console.log("Stored data for " + packet.id + " is " + userid);
 				var endpoint = DEFAULT_ENDPOINT;
 				request.post(endpoint).form({EDA:eda_cache[packet.id], userid:userid});
