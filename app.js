@@ -5,7 +5,7 @@
 var fs = require('fs');
 
 // file is included here:
-eval(fs.readFileSync('lib/numjs.js')+'');
+eval(fs.readFileSync('/lib/numjs.js')+'');
 var express = require('express');
 var sys = require('sys');
 var logging = require('node-logging');
