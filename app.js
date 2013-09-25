@@ -46,8 +46,7 @@ app.post("/register/:sensorid", function(req,res) {
 	console.log(req.params);
 	console.log(req.body);
 	console.log(req.body.userid);
-	var error = memjs.set(req.params.sensorid, req.body.userid);
-	memjs.get(req.params.sensorid, console.log);
+	var error = memjs.set(req.params.sensorid+"", req.body.userid+"");
 	console.log(error);
 	res.send("{'status':'registered'}");		
 });
