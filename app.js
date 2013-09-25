@@ -19,6 +19,7 @@ memjs = MemJS.create();
 app.listen(process.env.PORT || 3001);
 app.use(logging.requestLogger);
 app.use(express.compress());
+app.use(express.bodyParser());
 app.use(express.errorHandler({
   dumpExceptions: true, 
   showStack: true
