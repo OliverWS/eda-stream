@@ -19,6 +19,10 @@ app.use(express.errorHandler({
 }));
 
 var io = require('socket.io').listen(app, { log: false });
+
+var eda_cache = {};
+var NUM_SAMPLES_TO_STORE = 8*60;
+
 app.use(express.static(__dirname + '/public'));
 
 app.get("/stream/:id", function(req, res) {
@@ -41,9 +45,18 @@ io.sockets.on('connection', function (socket) {
     console.log("Socket connected! ");
     socket.on('packet', function (data) {
       try {
-        console.log("Recieved Packet: " + data);
-        var packet = JSON.parse(data);
-
+		console.log("Recieved Packet: " + data);
+		var packet = JSON.parse(data);
+      	if (!eda_cache.hasOwnProperty(packet.id)) {
+      		eda_cache[packet.id] = new Array();
+      	}
+      	if (eda_cache[packet.id].length >= NUM_SAMPLES_TO_STORE) {
+      		console.log("Latest Max EDA for " + packet.id + " is : " + Math.max(eda_cache[packet.id]));
+      		eda_cache[packet.id] = new Array();
+      	}
+      	var eda = parseFloat(packet.payload.split(",")[packet.payload.split(",").length-1])
+      	console.log("EDA value is: " + eda);
+      	eda_cache[packet.id].push(eda);
         console.log("ID: " +packet.id + " | Payload: " + packet.payload);
         io.sockets.emit(packet.id,packet.payload);
       }

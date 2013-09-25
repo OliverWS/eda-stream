@@ -43,14 +43,7 @@
 		  		setStatus(true);
 		  		resetTimer();
 	  			var line = data.replace("\r\n","").split(",");
-	  			var x = parseFloat( line[3] );
-	  			var y = parseFloat( line[2] );
-	  			var z = parseFloat( line[1] );
-	  			var m = Math.sqrt(x*x + y*y + z*z);
-	  			var eda = parseFloat( line[line.length-1] );
-	  			if(data.indexOf(",,,") == -1) edaGraph.addPoint(eda);
-	  			if(data.indexOf(",,,") == -1) motionGraph.addPoint(m);
-		    	
+	  			renderPacket(line);		    	
 		    	
 		 	});
 		 	socket.on('message', function (data) {
@@ -59,6 +52,16 @@
 		 	
 		 	
 		 });
+
+		  function renderPacket (line) {
+	  			var x = parseFloat( line[3] );
+	  			var y = parseFloat( line[2] );
+	  			var z = parseFloat( line[1] );
+	  			var m = Math.sqrt(x*x + y*y + z*z);
+	  			var eda = parseFloat( line[line.length-1] );
+	  			if(data.indexOf(",,,") == -1) edaGraph.addPoint(eda);
+	  			if(data.indexOf(",,,") == -1) motionGraph.addPoint(m);
+		  }
 		</script>
 	</head>
 	<body>

@@ -57,6 +57,24 @@ var Graph = function(opts){
 			console.log("Rejecting datapoint: " + dp);
 		}
 	};
+
+	var addPoints = function (points) {
+		var didAddPoints = false;
+		for (var i = points.length - 1; i >= 0; i--) {
+			var dp = points[i]
+			if(!isNaN(dp)){
+				data.points.push(dp);
+				didAddPoints = true;
+				if(data.points.length > size){
+					data.points.shift();
+				}
+			}
+		}
+		updateRange();
+		updateGraph();
+
+		
+	}
 	
 	var updateGraph = function() {
 		x = d3.scale.linear().domain([0, data.points.length]).range([0, w]);
