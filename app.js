@@ -29,7 +29,7 @@ var io = require('socket.io').listen(app, { log: false });
 
 var eda_cache = {};
 var NUM_SAMPLES_TO_STORE = 8*10;
-
+var DEFAULT_ENDPOINT = "https://physio-glass.appspot.com/physio/";
 
 
 
@@ -45,7 +45,7 @@ app.post("/register/:sensorid", function(req,res) {
 	console.log("Got a registration request!");
 	console.log(req.params);
 	console.log(req.body);
-	memjs.set(req.params.sensorid, {"endpoint":req.body.endpoint, "userid":req.body.userid});
+	memjs.set(req.params.sensorid, req.body.userid);
 	res.send("{'status':'registered'}");		
 });
 app.post("/unregister/:sensorid", function(req,res) {
@@ -74,7 +74,7 @@ io.sockets.on('connection', function (socket) {
       	if (eda_cache[packet.id].length >= NUM_SAMPLES_TO_STORE) {
 			memjs.get(packet.id, function(err, data) {
 				console.log("Stored data for " + packet.id + " is " + data);
-				var endpoint = data.endpoint;
+				var endpoint = DEFAULT_ENDPOINT;
 				var userid = data.userid;
 				request.post(endpoint).form({EDA:eda_cache[packet.id], userid:userid});
 				eda_cache[packet.id] = [];
