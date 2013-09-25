@@ -3,6 +3,7 @@
  * Module dependencies.
  */
 var fs = require('fs');
+var request = require('request');
 
 // file is included here:
 eval(fs.readFileSync('lib/numjs.js')+'');
@@ -10,9 +11,11 @@ var express = require('express');
 var sys = require('sys');
 var logging = require('node-logging');
 logging.setLevel('error');
-
 var app = express.createServer();
 console.log("ENV.PORT=" + process.env.PORT);
+var MemJS = require("memjs").Client
+memjs = MemJS.create();
+
 app.listen(process.env.PORT || 3001);
 app.use(logging.requestLogger);
 app.use(express.compress());
@@ -26,6 +29,9 @@ var io = require('socket.io').listen(app, { log: false });
 var eda_cache = {};
 var NUM_SAMPLES_TO_STORE = 8*10;
 
+
+
+
 app.use(express.static(__dirname + '/public'));
 
 app.get("/stream/:id", function(req, res) {
@@ -34,7 +40,16 @@ app.get("/stream/:id", function(req, res) {
 });
 
 
-
+app.post("/register/:sensorid", function(req,res) {
+	console.log(req.params);
+	memjs.set(req.params.sensorid, request.params.endpoint);
+	res.send("{'status':'registered'}");		
+});
+app.post("/unregister/:sensorid", function(req,res) {
+	console.log(req.params);
+	memjs.set(req.params.sensorid, null);
+	res.send("{'status':'unregistered'}");		
+});
 
 
 
@@ -54,8 +69,12 @@ io.sockets.on('connection', function (socket) {
       		eda_cache[packet.id] = new Array();
       	}
       	if (eda_cache[packet.id].length >= NUM_SAMPLES_TO_STORE) {
-      		console.log("Latest Max EDA for " + packet.id + " is : " + eda_cache[packet.id].max());
-      		eda_cache[packet.id] = new Array();
+			memjs.get(packet.id, function(err, endpoint) {
+				console.log("Endpoint for " + packet.id + " is " + endpoint);
+				request.post(endpoint).form({EDA:eda_cache[packet.id], sensorID:packet.id});
+				eda_cache[packet.id] = [];
+				
+			});
       	}
       	var eda = parseFloat(packet.payload.split(",")[packet.payload.split(",").length-1])
       	console.log("EDA value is: " + eda +" | Sample Number: " + eda_cache[packet.id].length);
