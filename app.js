@@ -43,8 +43,8 @@ app.get("/stream/:id", function(req, res) {
 app.post("/register/:sensorid", function(req,res) {
 	console.log("Got a registration request!");
 	console.log(req.params);
-	console.log(req.body.endpoint);
 	console.log(req);
+	console.log(req.body);
 	memjs.set(req.params.sensorid, req.body.endpoint);
 	res.send("{'status':'registered'}");		
 });
