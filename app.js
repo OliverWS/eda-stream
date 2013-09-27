@@ -81,7 +81,7 @@ io.sockets.on('connection', function (socket) {
 				  uri: endpoint,
 				  method: "POST",
 				  form: {
-				    'EDA': eda_cache[packet.id],
+				    'EDA': eda_cache[packet.id].join(","),
 				    'userid': userid+''
 				  }
 				}, function(error, response, body) {
