@@ -85,7 +85,9 @@ io.sockets.on('connection', function (socket) {
 				    userid: userid
 				  }
 				}, function(error, response, body) {
+				  console.log(error);
 				  console.log(body);
+				  console.log(response);
 				});
 				eda_cache[packet.id] = [];
 				
